@@ -1,7 +1,6 @@
 import requests
 API_URL = "https://akabab.github.io/superhero-api/api/all.json"
 def fetch_heroes(url: str = API_URL) -> list:
-    """Загружает список героев из API."""
     response = requests.get(url, timeout=10)
     response.raise_for_status()
     return response.json()
@@ -23,7 +22,6 @@ def get_tallest_hero(gender: str, has_work: bool, heroes: list = None) -> dict |
         return occupation not in ("-", "", None)
 
     def height_cm(hero: dict) -> float:
-        # height = ["6'0", "183 cm"]
         height_list = hero.get("appearance", {}).get("height", ["", ""])
         if len(height_list) < 2:
             return 0.0
