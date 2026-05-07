@@ -1,8 +1,5 @@
 import requests
-
 API_URL = "https://akabab.github.io/superhero-api/api/all.json"
-
-
 def fetch_heroes(url: str = API_URL) -> list:
     """Загружает список героев из API."""
     response = requests.get(url, timeout=10)
@@ -11,14 +8,6 @@ def fetch_heroes(url: str = API_URL) -> list:
 
 
 def get_tallest_hero(gender: str, has_work: bool, heroes: list = None) -> dict | None:
-    """
-    Возвращает самого высокого героя по полу и наличию работы.
-
-    :param gender: "Male" или "Female" (регистр неважен)
-    :param has_work: True — есть работа, False — нет работы
-    :param heroes: список героев (если не передан, тянется из API)
-    :return: словарь героя или None, если никто не подошёл
-    """
     if not isinstance(gender, str):
         raise TypeError("gender must be a string")
     if not isinstance(has_work, bool):

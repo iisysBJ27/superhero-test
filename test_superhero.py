@@ -1,9 +1,6 @@
 import pytest
 from unittest.mock import patch
 from superhero import get_tallest_hero, fetch_heroes
-
-
-# ---------- Фикстура с фейковыми данными ----------
 @pytest.fixture
 def fake_heroes():
     return [
@@ -40,7 +37,6 @@ def fake_heroes():
     ]
 
 
-# ---------- Позитивные кейсы ----------
 def test_tallest_male_with_work(fake_heroes):
     hero = get_tallest_hero("Male", True, heroes=fake_heroes)
     assert hero["name"] == "Tall Male Worker"
@@ -65,8 +61,6 @@ def test_gender_case_insensitive(fake_heroes):
     hero = get_tallest_hero("male", True, heroes=fake_heroes)
     assert hero["name"] == "Tall Male Worker"
 
-
-# ---------- Негативные кейсы ----------
 def test_no_match_returns_none(fake_heroes):
     result = get_tallest_hero("Unknown", True, heroes=fake_heroes)
     assert result is None
@@ -87,12 +81,11 @@ def test_invalid_has_work_type(fake_heroes):
 
 
 def test_zero_height_excluded(fake_heroes):
-    # Bad Height Hero (id=6) не должен попасть в выборку
+ 
     hero = get_tallest_hero("Male", True, heroes=fake_heroes)
     assert hero["id"] != 6
 
 
-# ---------- Интеграционный тест с реальным API ----------
 def test_real_api_returns_hero():
     hero = get_tallest_hero("Male", True)
     assert hero is not None
@@ -100,7 +93,6 @@ def test_real_api_returns_hero():
     assert hero["appearance"]["gender"].lower() == "male"
 
 
-# ---------- Тест с моком запроса ----------
 def test_fetch_heroes_called_when_no_list_passed(fake_heroes):
     with patch("superhero.fetch_heroes", return_value=fake_heroes) as mock_fetch:
         hero = get_tallest_hero("Male", True)
